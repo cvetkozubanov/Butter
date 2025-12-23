@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "zvluTvK3QIFJNqWOmRgl4duHs4jrmDHFF54HVKtDeEc=",
+  "Source": "MailBackgroundService",
+  "BasePath": "_content/MailBackgroundService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

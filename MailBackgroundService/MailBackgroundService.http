@@ -1,0 +1,6 @@
+@MailBackgroundService_HostAddress = http://localhost:5206
+
+GET {{MailBackgroundService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
