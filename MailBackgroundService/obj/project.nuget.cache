@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OAVua+qSJ54=",
+  "dgSpecHash": "XUtpbaLdlsw=",
   "success": true,
   "projectFilePath": "C:\\Users\\cvetko.zubanov\\source\\repos\\MailBackgroundService\\MailBackgroundService\\MailBackgroundService.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\cvetko.zubanov\\.nuget\\packages\\google.apis.gmail.v1\\1.73.0.3987\\google.apis.gmail.v1.1.73.0.3987.nupkg.sha512",
     "C:\\Users\\cvetko.zubanov\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\cvetko.zubanov\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\cvetko.zubanov\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.21.0\\microsoft.visualstudio.azure.containers.tools.targets.1.21.0.nupkg.sha512",
     "C:\\Users\\cvetko.zubanov\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512",
     "C:\\Users\\cvetko.zubanov\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\cvetko.zubanov\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
