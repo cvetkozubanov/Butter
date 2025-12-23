@@ -31,3 +31,5 @@ tsconfig.app.tsbuildinfo
 Dockerfile
 
 /.vs/
+/**/bin/*
+/**/obj/*
