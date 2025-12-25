@@ -1,0 +1,6 @@
+services:
+  mailbackgroundservice:
+    image: ${DOCKER_REGISTRY-}mailbackgroundservice
+    build:
+      context: .
+      dockerfile: MailBackgroundService/Dockerfile
