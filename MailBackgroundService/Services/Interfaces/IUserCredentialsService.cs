@@ -1,4 +1,5 @@
 ﻿using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Requests;
 
 namespace MailBackgroundService.Services.Interfaces
 {
@@ -6,6 +7,7 @@ namespace MailBackgroundService.Services.Interfaces
     {
         public UserCredential getCredentials();
         public string getAppName();
-        public void setCredentials();
+        public AuthorizationCodeRequestUrl setCredentials();
+        public void setToken(string code);
     }
 }

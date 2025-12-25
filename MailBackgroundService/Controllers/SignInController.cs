@@ -1,3 +1,4 @@
+using Google.Apis.Auth.OAuth2;
 using MailBackgroundService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +18,20 @@ namespace MailBackgroundService.Controllers
         }
 
         [HttpGet(Name = "SignIn")]
-        public void Get()
+        public IActionResult Get()
         {
-            _singletonService.setCredentials();
+            var asd = _singletonService.setCredentials();
+
+            return Redirect(asd.Build().ToString());
+        }
+        [HttpGet("signin-google")]
+        public async Task<IActionResult> GoogleResponse(string code, string state)
+        {
+            Console.WriteLine("test");
+
+            _singletonService.setToken(code);
+
+            return null;
         }
     }
 }
