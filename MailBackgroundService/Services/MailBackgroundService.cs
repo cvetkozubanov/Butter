@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using static Google.Apis.Requests.BatchRequest;
 
 namespace MailBackgroundService.Services
 {
@@ -26,7 +27,9 @@ namespace MailBackgroundService.Services
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             string[] Scopes = {  GmailService.Scope.GmailReadonly };
-
+            string exePath = AppDomain.CurrentDomain.BaseDirectory;
+            string tokenFolder = Path.Combine(exePath, "test.txt");
+            File.WriteAllText(tokenFolder, $"{DateTime.UtcNow} \n");
             try
             { 
                 while (!stoppingToken.IsCancellationRequested)
@@ -49,14 +52,13 @@ namespace MailBackgroundService.Services
                         var listRequest = service.Users.Messages.List("me");
                         listRequest.Q = query;
 
-                        string exePath = AppDomain.CurrentDomain.BaseDirectory;
-                        string tokenFolder = Path.Combine(exePath, "test.txt");
+
                         //if (File.Exists(tokenFolder))
                         //{
                             
                         //}
                         var response = listRequest.Execute();
-                        File.WriteAllText(tokenFolder, $"{DateTime.UtcNow} {response.Messages.Count}");
+                        File.AppendAllText(tokenFolder, $"{DateTime.UtcNow} {response.Messages.Count} \n");
 
                         if (response.Messages != null)
                         {
