@@ -40,3 +40,4 @@ C:\Users\cvetko.zubanov\source\repos\MailBackgroundService\MailBackgroundService
 C:\Users\cvetko.zubanov\source\repos\MailBackgroundService\MailBackgroundService\bin\Debug\net8.0\credentials.json
 C:\Users\cvetko.zubanov\source\repos\MailBackgroundService\MailBackgroundService\bin\Debug\net8.0\Google.Apis.Gmail.v1.dll
 C:\Users\cvetko.zubanov\source\repos\MailBackgroundService\MailBackgroundService\obj\Debug\net8.0\MailBackgroundService.sourcelink.json
+C:\Users\cvetko.zubanov\source\repos\MailBackgroundService\MailBackgroundService\bin\Debug\net8.0\credentials - Copy.json

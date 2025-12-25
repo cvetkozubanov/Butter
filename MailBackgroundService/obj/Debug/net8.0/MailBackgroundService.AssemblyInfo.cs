@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MailBackgroundService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee85ea56965b804cd9c35a2a90126d234d58c63b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e8a6923d9f41fdf07c1ca89b704fa44095c9d596")]
 [assembly: System.Reflection.AssemblyProductAttribute("MailBackgroundService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MailBackgroundService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

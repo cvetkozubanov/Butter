@@ -1,0 +1,121 @@
+RSDE – Residential Delivery
+RSPK – Residential Pickup
+INDE – Inside Delivery
+INPK – Inside Pickup
+LGDE – Lift Gate Delivery
+LGPK – Lift Gate Pickup
+CALL – Call Before Delivery
+LIDE – Limited Access Delivery
+LIPK – Limited Access Pickup
+DKDE – Dock Delivery
+DKPK – Dock Pickup
+PRFR – Protect From Freezing
+PRHE – Protect From Heat
+SISH – Single Shipment
+SFDE – Storage Facility Delivery
+SFPK – Storage Facility Pickup
+TSDE – Trade Show Delivery
+TSPK – Trade Show Pickup
+STCH – Storage Charges
+PRDE – Proof of Delivery
+PAKG – Packaging
+FUEL – Fuel Surcharge
+LMPF – Lumper Fee
+HZMT – Hazardous Materials
+CODX – COD
+INSU – Insurance
+SECH – Service Charge
+DETN – Detention
+STOP – Stop Charge
+ADFE – Admin Fee
+SPEQ – Specialized Equipment
+TEAM – Team
+LAOV – Layover
+DISC – Discount
+LADE – Late Delivery
+EXLG – Excessive Length Charge
+EQRE – Equipment Rental
+VESV – Vehicle Escort Service
+HCDE – High Cost Delivery
+INSP – Inspection
+DRAS – Driver Assist
+AGCH – Agent Charges
+COSF – Compliance Service Fee
+RAMI – Rerouted Additional Mileage
+CATR – Carrier Transfer
+TEMC – Temperature Control
+DUTY – Duty Fees
+CRIB – Cribbing
+DEMI – Deadhead Mileage
+SCTK – Scale Ticket
+ADMI – Additional Mileage
+ATPK – Attempt Pickup
+ATDE – Attempt Delivery
+BRFE – Broker Fee
+APTD – Delivery Appointment
+SSSH – Sort and Segregate
+MNDE – Mine Delivery
+CSPK – Construction Site Pickup
+CSDE – Construction Site Delivery
+GRWE – Grocery Warehouse Delivery
+GRWP – Grocery Warehouse Pickup
+RECL – ReClass
+REWT – ReWeigh
+DMS – Government / Airport / Mine / Gas / Oil Delivery
+REDE – Redelivery
+REMN – Reconsignment
+CBOL – Corrected Bill of Lading
+PKSE – Peak Season Surcharge
+PWDE – Place of Worship Delivery
+PWPK – Place of Worship Pickup
+SCDE – School Delivery
+SCPK – School Pickup
+BLSH – Blind Shipment
+MIPK – Military Site Pickup
+MIDE – Military Site Delivery
+NCDE – Non-Commercial Delivery
+NCPK – Non-Commercial Pickup
+LBDE – Library Delivery
+LBPK – Library Pickup
+UNDE – University Delivery
+UNPK – University Pickup
+FAPK – Farm Pickup
+FADE – Farm Delivery
+COCP – Country Club Pickup
+COCD – Country Club Delivery
+SOPK – Social Club Pickup
+SODE – Social Club Delivery
+FMDE – Fair / Amusement Park Delivery
+FMPK – Fair / Amusement Park Pickup
+CADE – Camp Site Delivery
+CAPK – Camp Site Pickup
+HODE – Hotel Delivery
+HOPK – Hotel Pickup
+AIDE – Airport Delivery
+AIPK – Airport Pickup
+NUPK – Nuclear Pickup
+NUDE – Nuclear Delivery
+MNPK – Mine Pickup
+FIMI – Final Mile
+SPHS – Special Handling Service
+AdNW – White Glove Not Used
+TONU – Truck Order Not Used
+TDCR – Time Date Critical
+AHUR – After Hour Fee
+NOTY – Notify Before Delivery
+REPF – Relay Lumper Fee
+RYPF – Relay Processing Fee
+NOTF – Notification Fee
+GSDE – Government Site Delivery
+GSPK – Government Site Pickup
+SIGN – Residential Appointment / Signature Delivery
+TWMD – Two-Man Delivery
+CNVY – Convoy Platform Services Fee
+PLEX – Pallet Exchange
+WCPK – Will Call Destination
+WCDE – Customer Drop Origin
+GUAR – Guaranteed Charges
+CAPF – California High Cost Fee
+PSSF – Peak Season Surcharge
+CABC – Canadian Border & Security Charge
+MABD – Must Arrive By Date
