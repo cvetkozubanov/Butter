@@ -7,6 +7,7 @@ using MailBackgroundService.Helpers;
 using MailBackgroundService.Managers;
 using MailBackgroundService.Services.Interfaces;
 using System;
+using System.IO;
 using System.Net;
 using System.Text;
 
@@ -48,7 +49,15 @@ namespace MailBackgroundService.Services
                         var listRequest = service.Users.Messages.List("me");
                         listRequest.Q = query;
 
+                        string exePath = AppDomain.CurrentDomain.BaseDirectory;
+                        string tokenFolder = Path.Combine(exePath, "test.txt");
+                        //if (File.Exists(tokenFolder))
+                        //{
+                            
+                        //}
                         var response = listRequest.Execute();
+                        File.WriteAllText(tokenFolder, $"{DateTime.UtcNow} {response.Messages.Count}");
+
                         if (response.Messages != null)
                         {
                             foreach (var m in response.Messages)
