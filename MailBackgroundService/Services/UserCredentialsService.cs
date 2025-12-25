@@ -101,17 +101,7 @@ namespace MailBackgroundService.Services
         public void setToken(string code)
         {
             _logger.LogInformation("set token " + code + " " + flow + " " + redirectURL);
-            flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
-            {
-                ClientSecrets = new ClientSecrets
-                {
-                    ClientId = "1038892956158-g1pegsbfth319um403517vvdvuu2tid6.apps.googleusercontent.com",
-                    ClientSecret = "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"
-                },
-                Scopes = new[] { GmailService.Scope.GmailReadonly },
-                DataStore = new FileDataStore(createPath()), // Persistent store
-                Prompt = "consent",
-            });
+
             var token = flow.ExchangeCodeForTokenAsync(
                 "user_id",
                 code,
