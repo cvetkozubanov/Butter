@@ -31,7 +31,7 @@ namespace MailBackgroundService.Controllers
 
             _singletonService.setToken(code);
 
-            return null;
+            return Content("All good");
         }
     }
 }
