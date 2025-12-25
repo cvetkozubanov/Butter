@@ -21,13 +21,13 @@ namespace MailBackgroundService.Controllers
         public IActionResult Get()
         {
             var asd = _singletonService.setCredentials();
-
+            _logger.LogInformation("test SignIn ");
             return Redirect(asd.Build().ToString());
         }
         [HttpGet("signin-google")]
         public async Task<IActionResult> GoogleResponse(string code, string state)
         {
-            Console.WriteLine("test");
+            _logger.LogInformation("test GoogleResponse " + code);
 
             _singletonService.setToken(code);
 
