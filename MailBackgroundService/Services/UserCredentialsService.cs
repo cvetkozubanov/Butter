@@ -19,11 +19,13 @@ namespace MailBackgroundService.Services
         private string redirectURL = "";
         private UserCredential credential;
         private GoogleAuthorizationCodeFlow flow;
-        public UserCredentialsService (IConfiguration configuration)
+        private readonly ILogger<UserCredentialsService> _logger;
+        public UserCredentialsService (IConfiguration configuration, ILogger<UserCredentialsService> logger)
         {
             email = configuration["Email"];
             appname = configuration["AppName"];
             redirectURL = configuration["RedirectURL"];
+            _logger = logger;
             if (Directory.Exists(createPath()))
             {
                 //credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
@@ -98,6 +100,7 @@ namespace MailBackgroundService.Services
 
         public void setToken(string code)
         {
+            _logger.LogInformation("set token " + code + " " + flow + " " + redirectURL);
             var token = flow.ExchangeCodeForTokenAsync(
                 "user_id",
                 code,
