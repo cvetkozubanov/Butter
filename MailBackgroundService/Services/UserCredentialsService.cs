@@ -37,7 +37,7 @@ namespace MailBackgroundService.Services
                 //    CancellationToken.None,
                 //    new FileDataStore(createPath()) // This saves the token to %appdata%
                 //).Result;
-                var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
+                flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
                 {
                     ClientSecrets = new ClientSecrets
                     {

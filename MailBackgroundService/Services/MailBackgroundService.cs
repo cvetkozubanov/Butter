@@ -27,9 +27,8 @@ namespace MailBackgroundService.Services
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             string[] Scopes = {  GmailService.Scope.GmailReadonly };
-            string exePath = AppDomain.CurrentDomain.BaseDirectory;
-            string tokenFolder = Path.Combine(exePath, "test.txt");
-            File.WriteAllText(tokenFolder, $"{DateTime.UtcNow} \n");
+
+            _logger.LogInformation($"ExecuteAsync {DateTime.UtcNow}");
             try
             { 
                 while (!stoppingToken.IsCancellationRequested)
@@ -58,7 +57,7 @@ namespace MailBackgroundService.Services
                             
                         //}
                         var response = listRequest.Execute();
-                        File.AppendAllText(tokenFolder, $"{DateTime.UtcNow} {response.Messages.Count} \n");
+                        _logger.LogInformation($"Execute {response.Messages.Count}");
 
                         if (response.Messages != null)
                         {
