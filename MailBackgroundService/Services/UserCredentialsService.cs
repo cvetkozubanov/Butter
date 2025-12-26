@@ -65,7 +65,10 @@ namespace MailBackgroundService.Services
             codeRequest.State = state;
             return codeRequest;
         }
-
+        public bool isKeyPresent()
+        {
+            return Directory.Exists(createPath()) && Directory.EnumerateFileSystemEntries(createPath()).Any();
+        }
         public void setToken(string code)
         {
             _logger.LogInformation("set token " + code + " " + flow + " " + redirectURL);

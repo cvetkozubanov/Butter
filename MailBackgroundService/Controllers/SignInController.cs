@@ -20,9 +20,16 @@ namespace MailBackgroundService.Controllers
         [HttpGet(Name = "SignIn")]
         public IActionResult Get()
         {
-            var asd = _singletonService.setCredentials();
+            
+            if (_singletonService.isKeyPresent())
+            {
+                _logger.LogInformation("test SignIn already logged in");
+                return Content("already logged in");
+            }
+            var url = _singletonService.setCredentials();            
+            
             _logger.LogInformation("test SignIn ");
-            return Redirect(asd.Build().ToString());
+            return Redirect(url.Build().ToString());
         }
         [HttpGet("signin-google")]
         public async Task<IActionResult> GoogleResponse(string code, string state)

@@ -9,5 +9,6 @@ namespace MailBackgroundService.Services.Interfaces
         public string getAppName();
         public AuthorizationCodeRequestUrl setCredentials();
         public void setToken(string code);
+        public bool isKeyPresent();
     }
 }
