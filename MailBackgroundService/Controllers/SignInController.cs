@@ -9,9 +9,9 @@ namespace MailBackgroundService.Controllers
     public class SignInController : ControllerBase
     {
         private readonly ILogger<SignInController> _logger;
-        private readonly IUserCredentialsService _singletonService;
+        private readonly IGoogleUserCredentialsService _singletonService;
 
-        public SignInController(ILogger<SignInController> logger, IUserCredentialsService singletonService)
+        public SignInController(ILogger<SignInController> logger, IGoogleUserCredentialsService singletonService)
         {
             _logger = logger;
             _singletonService = singletonService;
@@ -21,12 +21,12 @@ namespace MailBackgroundService.Controllers
         public IActionResult Get()
         {
             
-            if (_singletonService.isKeyPresent())
+            if (_singletonService.IsKeyPresent())
             {
                 _logger.LogInformation("test SignIn already logged in");
                 return Content("already logged in");
             }
-            var url = _singletonService.setCredentials();            
+            var url = _singletonService.SetCredentials();            
             
             _logger.LogInformation("test SignIn ");
             return Redirect(url.Build().ToString());
@@ -36,7 +36,7 @@ namespace MailBackgroundService.Controllers
         {
             _logger.LogInformation("test GoogleResponse " + code);
 
-            _singletonService.setToken(code);
+            _singletonService.SetToken(code);
 
             return Content("All good");
         }

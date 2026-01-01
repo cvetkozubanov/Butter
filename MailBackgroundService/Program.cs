@@ -9,7 +9,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IUserCredentialsService, UserCredentialsService>();
+builder.Services.AddSingleton<I3PLUserCredentialsService, _3PLUserCredentialsService>();
+builder.Services.AddSingleton<IRatesService, RatesService>();
+builder.Services.AddSingleton<IGoogleUserCredentialsService, GoogleUserCredentialsService>();
 builder.Services.AddHostedService<MailBackgroundService.Services.MailBackgroundService>();
 var app = builder.Build();
 

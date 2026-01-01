@@ -12,17 +12,18 @@ using System.Security.Cryptography.Xml;
 
 namespace MailBackgroundService.Services
 {
-    public class UserCredentialsService : IUserCredentialsService
+    public class GoogleUserCredentialsService : IGoogleUserCredentialsService
     {
         private string appname = "";
         private string email = "";
         private string redirectURL = "";
         private UserCredential credential;
         private GoogleAuthorizationCodeFlow flow;
-        private readonly ILogger<UserCredentialsService> _logger;
+        private readonly ILogger<GoogleUserCredentialsService> _logger;
         private string ClientId = "";
         private string ClientSecret = "";
-        public UserCredentialsService (IConfiguration configuration, ILogger<UserCredentialsService> logger)
+        public static string[] Scopes = new string[] { GmailService.Scope.GmailReadonly, GmailService.Scope.GmailSend };
+        public GoogleUserCredentialsService (IConfiguration configuration, ILogger<GoogleUserCredentialsService> logger)
         {
             email = configuration["Email"];
             appname = configuration["AppName"];
@@ -39,7 +40,7 @@ namespace MailBackgroundService.Services
                         ClientId = ClientId,
                         ClientSecret = ClientSecret
                     },
-                    Scopes = new[] { GmailService.Scope.GmailReadonly },
+                    Scopes = GoogleUserCredentialsService.Scopes,
                     DataStore = new FileDataStore(createPath())
                 });
 
@@ -47,7 +48,7 @@ namespace MailBackgroundService.Services
                 credential = new UserCredential(flow, "user_id", flow.LoadTokenAsync(userId, CancellationToken.None).Result);
             }
         }
-        public AuthorizationCodeRequestUrl setCredentials()
+        public AuthorizationCodeRequestUrl SetCredentials()
         {
             flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
             {
@@ -56,7 +57,7 @@ namespace MailBackgroundService.Services
                     ClientId = ClientId,
                     ClientSecret = ClientSecret
                 },
-                Scopes = new[] { GmailService.Scope.GmailReadonly },
+                Scopes = GoogleUserCredentialsService.Scopes,
                 DataStore = new FileDataStore(createPath()), // Persistent store
                 Prompt = "consent",
             });
@@ -65,11 +66,11 @@ namespace MailBackgroundService.Services
             codeRequest.State = state;
             return codeRequest;
         }
-        public bool isKeyPresent()
+        public bool IsKeyPresent()
         {
             return Directory.Exists(createPath()) && Directory.EnumerateFileSystemEntries(createPath()).Any();
         }
-        public void setToken(string code)
+        public void SetToken(string code)
         {
             _logger.LogInformation("set token " + code + " " + flow + " " + redirectURL);
 
@@ -89,12 +90,12 @@ namespace MailBackgroundService.Services
             return tokenFolder;
         }
 
-        string IUserCredentialsService.getAppName()
+        string IGoogleUserCredentialsService.GetAppName()
         {
             return appname;
         }
 
-        UserCredential IUserCredentialsService.getCredentials()
+        UserCredential IGoogleUserCredentialsService.GetCredentials()
         {
             return credential;
         }
