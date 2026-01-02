@@ -9,5 +9,8 @@
         public string? BillToCode { get; set; }
         public string ServiceType { get; set; }
         public string ServiceDescription { get; set; }
+        public string RateQuoteId { get; set; }
+        public List<ItemOutput> Accessorials { get; set; } = new List<ItemOutput>();
+        public List<ItemOutput> Commodities { get; set; } = new List<ItemOutput>();
     }
 }

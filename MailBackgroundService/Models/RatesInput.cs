@@ -62,5 +62,6 @@ namespace MailBackgroundService.Models
         public string ConsigneeCountry { get; set; } = "USA";
         public string EquipmentType { get; set; } = "StraightVan";
         public bool Valid { get; set; } = true;
+        public List<string> Accessorials { get; set; } = new List<string>();
     }
 }
