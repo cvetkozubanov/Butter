@@ -37,13 +37,20 @@ namespace MailBackgroundService.Models
                     {
                         continue;
                     }
+                    int weight = dimensions.Count == lbs.Count ? int.Parse(lbs[i]) : int.Parse(lbs[0]);
+                    int width = dim[0];
+                    int height = dim[1];
+                    int length = dim[2];
+                    float density = weight / (width * height * length) / 1728;
                     Items.Add(new Item()
                     {
-                        Width = dim[0],
-                        Height = dim[1],
-                        Length = dim[2],
+                        Width = width,
+                        Height = height,
+                        Length = length,
                         Pieces = dimensions.Count == lbs.Count ? int.Parse(pcs[i]) : int.Parse(pcs[0]),
-                        Weight = dimensions.Count == lbs.Count ? int.Parse(lbs[i]) : int.Parse(lbs[0]),
+                        Weight = weight,
+                        Density = density.ToString(),
+                        Class = ClassMapper(density),
                     });
                     i++;
                 }
@@ -63,5 +70,60 @@ namespace MailBackgroundService.Models
         public string EquipmentType { get; set; } = "StraightVan";
         public bool Valid { get; set; } = true;
         public List<string> Accessorials { get; set; } = new List<string>();
+
+        private string ClassMapper (float density) {
+            if (density < 1)
+            {
+                return "400";
+            }
+            else if (density < 2)
+            {
+                return "300";
+            }
+            else if (density < 4)
+            {
+                return "250";
+            }
+            else if (density < 6)
+            {
+                return "175";
+            }
+            else if (density < 8)
+            {
+                return "125";
+            }
+            else if (density < 10)
+            {
+                return "100";
+            }
+            else if (density < 12)
+            {
+                return "92.5";
+            }
+            else if (density < 15)
+            {
+                return "85";
+            }
+            else if (density < 22.5)
+            {
+                return "70";
+            }
+            else if (density < 30)
+            {
+                return "65";
+            }
+            else if (density < 35)
+            {
+                return "60";
+            }
+            else if (density < 50)
+            {
+                return "55";
+            }
+            else
+            {
+                return "50";
+            }
+        }
     }
 }

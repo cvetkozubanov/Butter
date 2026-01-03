@@ -33,8 +33,8 @@ namespace MailBackgroundService.Services
                 HttpResponseMessage response = client.PostAsJsonAsync(authURI, input, options).Result;
 
                 string responseBody = response.Content.ReadAsStringAsync().Result;
-                RatesOutput[] ratesOutput = JsonConvert.DeserializeObject<List<RatesOutput>>(responseBody).ToArray();
-                return ratesOutput;
+                var ratesOutput = JsonConvert.DeserializeObject<List<RatesOutput>>(responseBody).ToList().OrderBy(x => x.Billed);
+                return ratesOutput.Take(2).ToArray();
             }
             catch (Exception ex)
             {
