@@ -12,8 +12,8 @@ namespace MailBackgroundService.Models
                 var shipperZip = mail.Split("We have an order shipping from ")[1].Split(" to the address listed below:")[0];
                 string pattern = @"\d+";
                 ShipperZip = Regex.Matches(shipperZip, pattern)[0].Value;
-
-                ConsigneeZip = mail.Split("\r\n")[5].Split(" ")[mail.Split("\r\n")[5].Split(" ").Length - 2];
+                var address = mail.Split("to the address listed below:")[1].Split("\r\n")[4];
+                ConsigneeZip = address.Split(" ")[address.Split(" ").Length - 2];
 
                 pattern = @"\d+[xX]\d+[xX]\d+";
                 var dims = Regex.Matches(mail, pattern);

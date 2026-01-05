@@ -15,15 +15,17 @@ namespace MailBackgroundService.Services
         private readonly ILogger<MailBackgroundService> _logger;
         private readonly IGoogleUserCredentialsService _singletonService;
         private readonly I3PLUserCredentialsService _3PLUserCredentialsService;
+        private readonly I3PLGlobalUserCredentialsService _3PLGlobalUserCredentialsService;
         private readonly IRatesService _ratesService;
         private readonly string readFromEmail = "";
         private readonly string email = "";
         private readonly string createShipmentAPI = "";
-        public MailBackgroundService(IConfiguration configuration, ILogger<MailBackgroundService> logger, IGoogleUserCredentialsService singletonService, I3PLUserCredentialsService _3PLUserCredentialsService, IRatesService ratesService)
+        public MailBackgroundService(IConfiguration configuration, ILogger<MailBackgroundService> logger, IGoogleUserCredentialsService singletonService, I3PLUserCredentialsService _3PLUserCredentialsService, I3PLGlobalUserCredentialsService _3PLGlobalUserCredentialsService, IRatesService ratesService)
         {
             _logger = logger;
             _singletonService = singletonService;
             this._3PLUserCredentialsService = _3PLUserCredentialsService;
+            this._3PLGlobalUserCredentialsService = _3PLGlobalUserCredentialsService;
             _ratesService = ratesService;
             readFromEmail = configuration["ReadFromEmail"];
             email = configuration["Email"];
@@ -36,6 +38,7 @@ namespace MailBackgroundService.Services
             try
             {
                 _3PLUserCredentialsService.GetToken();
+                _3PLGlobalUserCredentialsService.GetToken();
 
                 while (!stoppingToken.IsCancellationRequested)
                 {
@@ -111,13 +114,16 @@ namespace MailBackgroundService.Services
                 var emailMessage = new MimeMessage();
                 emailMessage.From.Add(new MailboxAddress("Sender Name", readFromEmail));
                 emailMessage.To.Add(new MailboxAddress("", email));
-                var subject = m.Payload.Headers.FirstOrDefault(h => h.Name == "Subject")?.Value;
-                subject = subject != null ? subject : "No Subject";
-                emailMessage.Subject = subject.StartsWith("Re:", StringComparison.OrdinalIgnoreCase) ? subject : "Re: " + subject;
                 emailMessage.Body = new TextPart("plain") { Text = $"Best rates are: \r\n\r\n {string.Join("\r\n\r\n", rates.Select(r => JsonSerializer.Serialize(r)))}" };
+
+                // Essential headers for threading
+                emailMessage.Headers.Add("In-Reply-To", m.Id);
+                emailMessage.Headers.Add("References", m.Id);
+
 
                 var messageResponse = new Message
                 {
+                    ThreadId = m.Id,
                     Raw = Base64UrlEncode(emailMessage.ToString())
                 };
                 if (rates.Length > 0)

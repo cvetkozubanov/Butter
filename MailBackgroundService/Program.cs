@@ -10,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<I3PLUserCredentialsService, _3PLUserCredentialsService>();
+builder.Services.AddSingleton<I3PLGlobalUserCredentialsService, _3PLGlobalUserCredentialsService>();
 builder.Services.AddSingleton<IRatesService, RatesService>();
 builder.Services.AddSingleton<IGoogleUserCredentialsService, GoogleUserCredentialsService>();
 builder.Services.AddHostedService<MailBackgroundService.Services.MailBackgroundService>();
