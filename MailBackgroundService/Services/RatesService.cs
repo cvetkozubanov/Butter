@@ -10,13 +10,17 @@ namespace MailBackgroundService.Services
     {
         private readonly ILogger<GoogleUserCredentialsService> _logger;
         private readonly I3PLUserCredentialsService _3PLUserCredentialsService;
+        private readonly I3PLGlobalUserCredentialsService _3PLGlobalUserCredentialsService;
         private readonly HttpClient client = new HttpClient();
         private string authURI = "";
-        public RatesService(IConfiguration configuration, ILogger<GoogleUserCredentialsService> logger, I3PLUserCredentialsService i3PLUserCredentialsService) 
+        private string createShipmentAPI = "";
+        public RatesService(IConfiguration configuration, ILogger<GoogleUserCredentialsService> logger, I3PLUserCredentialsService i3PLUserCredentialsService, I3PLGlobalUserCredentialsService _3PLGlobalUserCredentialsService) 
         {
             _logger = logger;
             authURI = configuration["RatesURI"];
+            createShipmentAPI = configuration["CreateShipmentAPI"];
             _3PLUserCredentialsService = i3PLUserCredentialsService;
+            this._3PLGlobalUserCredentialsService = _3PLGlobalUserCredentialsService;
         }
         public RatesOutput[] GetRates(RatesInput input, bool firstTime)
         {
@@ -47,6 +51,33 @@ namespace MailBackgroundService.Services
             }
             return null;
 
+        }
+
+        public void QuoteRate(RatesInput input, bool firstTime)
+        {
+            try
+            {
+                var token = _3PLGlobalUserCredentialsService.AccessToken;
+
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.Never // Ensures nulls are sent
+                };
+                HttpResponseMessage response = client.PostAsJsonAsync(createShipmentAPI, input, options).Result;
+
+                string responseBody = response.Content.ReadAsStringAsync().Result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("RatesService QuoteRate", ex.Message);
+                if (firstTime)
+                {
+                    _3PLUserCredentialsService.GetToken();
+                    QuoteRate(input, false);
+                }
+            }
         }
     }
 }

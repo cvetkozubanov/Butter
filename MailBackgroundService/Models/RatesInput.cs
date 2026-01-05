@@ -14,6 +14,9 @@ namespace MailBackgroundService.Models
                 ShipperZip = Regex.Matches(shipperZip, pattern)[0].Value;
                 var address = mail.Split("to the address listed below:")[1].Split("\r\n")[4];
                 ConsigneeZip = address.Split(" ")[address.Split(" ").Length - 2];
+                ConsigneeAddress = address;
+                ShipperAddress = "TODO fix from map";
+                PickupDate = DateTime.Now.AddDays(1).ToString();
 
                 pattern = @"\d+[xX]\d+[xX]\d+";
                 var dims = Regex.Matches(mail, pattern);
@@ -70,7 +73,10 @@ namespace MailBackgroundService.Models
         public string EquipmentType { get; set; } = "StraightVan";
         public bool Valid { get; set; } = true;
         public List<string> Accessorials { get; set; } = new List<string>();
-
+        public string ConsigneeAddress { get; set; }
+        public string ShipperAddress { get; set; }
+        public string CustomerId { get; set; }
+        public string PickupDate { get; set; }
         private string ClassMapper (float density) {
             if (density < 1)
             {

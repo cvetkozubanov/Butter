@@ -21,6 +21,7 @@ namespace MailBackgroundService.Services
         private readonly string readFromEmail = "";
         private readonly string email = "";
         private readonly string createShipmentAPI = "";
+        private readonly string customerId = "";
         public MailBackgroundService(IConfiguration configuration, ILogger<MailBackgroundService> logger, IGoogleUserCredentialsService singletonService, I3PLUserCredentialsService _3PLUserCredentialsService, I3PLGlobalUserCredentialsService _3PLGlobalUserCredentialsService, IRatesService ratesService)
         {
             _logger = logger;
@@ -31,6 +32,7 @@ namespace MailBackgroundService.Services
             readFromEmail = configuration["ReadFromEmail"];
             email = configuration["Email"];
             createShipmentAPI = configuration["CreateShipmentAPI"];
+            customerId = configuration["CustomerId"];
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -139,6 +141,8 @@ namespace MailBackgroundService.Services
                 {
                     await service.Users.Messages.Send(messageResponse, "me").ExecuteAsync();
                 }
+                rateInput.CustomerId = customerId;
+                _ratesService.QuoteRate(rateInput, true);
                 //createShipmentAPI
                 ModifyMessageRequest mods = new ModifyMessageRequest();
                 mods.RemoveLabelIds = new List<string> { "UNREAD" };
@@ -152,7 +156,7 @@ namespace MailBackgroundService.Services
         }
         private string Base64UrlEncode(string input)
         {
-            var data = System.Text.Encoding.UTF8.GetBytes(input);
+            var data = Encoding.UTF8.GetBytes(input);
             return Convert.ToBase64String(data).Replace('+', '-').Replace('/', '_').Replace("=", "");
         }
 

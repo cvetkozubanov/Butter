@@ -5,5 +5,6 @@ namespace MailBackgroundService.Services.Interfaces
     public interface IRatesService
     {
         public RatesOutput[] GetRates(RatesInput input, bool firstTime);
+        public void QuoteRate(RatesInput input, bool firstTime);
     }
 }
