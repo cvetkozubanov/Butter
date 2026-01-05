@@ -41,7 +41,7 @@ namespace MailBackgroundService.Models
                     int width = dim[0];
                     int height = dim[1];
                     int length = dim[2];
-                    float density = weight / (width * height * length) / 1728;
+                    float density = weight / ((float)(width * height * length) / 1728);
                     Items.Add(new Item()
                     {
                         Width = width,

@@ -53,7 +53,7 @@ namespace MailBackgroundService.Services
                             ApplicationName = appName,
                         });
 
-                        string query = $"from:{readFromEmail}";
+                        string query = $"from:{readFromEmail} is:unread";
                         var listRequest = service.Users.Messages.List("me");
                         listRequest.Q = query;
 
@@ -114,7 +114,19 @@ namespace MailBackgroundService.Services
                 var emailMessage = new MimeMessage();
                 emailMessage.From.Add(new MailboxAddress("Sender Name", readFromEmail));
                 emailMessage.To.Add(new MailboxAddress("", email));
-                emailMessage.Body = new TextPart("plain") { Text = $"Best rates are: \r\n\r\n {string.Join("\r\n\r\n", rates.Select(r => JsonSerializer.Serialize(r)))}" };
+                var transitTime = rates.Select((r, i) => $"\t- CARRIER{i  + 1} - Curbside - $ (estimated transit time: {r.TransitTime} business days)");
+                var carriers = string.Join("\r\n                    ", transitTime);
+
+                string text = @$"                    Hi
+
+                    Please see the quotes below and let us know if you have any questions.
+                    {carriers}
+
+                    Please let us know how you'd like to proceed.";
+
+                var textPart= new TextPart("plain") { Text = text };
+                textPart.ContentType.Charset = "utf-8";
+                emailMessage.Body = textPart;
 
                 // Essential headers for threading
                 emailMessage.Headers.Add("In-Reply-To", m.Id);
@@ -126,6 +138,7 @@ namespace MailBackgroundService.Services
                     ThreadId = m.Id,
                     Raw = Base64UrlEncode(emailMessage.ToString())
                 };
+
                 if (rates.Length > 0)
                 {
                     await service.Users.Messages.Send(messageResponse, "me").ExecuteAsync();
