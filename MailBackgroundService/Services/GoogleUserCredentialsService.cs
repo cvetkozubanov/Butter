@@ -22,7 +22,7 @@ namespace MailBackgroundService.Services
         private readonly ILogger<GoogleUserCredentialsService> _logger;
         private string ClientId = "";
         private string ClientSecret = "";
-        public static string[] Scopes = new string[] { GmailService.Scope.GmailReadonly, GmailService.Scope.GmailSend };
+        public static string[] Scopes = new string[] { GmailService.Scope.GmailReadonly, GmailService.Scope.GmailSend, GmailService.Scope.GmailModify };
         public GoogleUserCredentialsService (IConfiguration configuration, ILogger<GoogleUserCredentialsService> logger)
         {
             email = configuration["Email"];

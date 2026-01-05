@@ -5,6 +5,7 @@ using Google.Apis.Services;
 using MailBackgroundService.Models;
 using MailBackgroundService.Services.Interfaces;
 using MimeKit;
+using Scriban;
 using System.Text;
 using System.Text.Json;
 
@@ -114,17 +115,12 @@ namespace MailBackgroundService.Services
                 var emailMessage = new MimeMessage();
                 emailMessage.From.Add(new MailboxAddress("Sender Name", readFromEmail));
                 emailMessage.To.Add(new MailboxAddress("", email));
-                var transitTime = rates.Select((r, i) => $"\t- CARRIER{i  + 1} - Curbside - $ (estimated transit time: {r.TransitTime} business days)");
-                var carriers = string.Join("\r\n                    ", transitTime);
 
-                string text = @$"                    Hi
+                string templateContent = File.ReadAllText("Templates/rate.html");
+                var template = Template.Parse(templateContent);
+                var result = template.Render(new { rates = rates.Select(r => new { Value = r.TransitTime }) });
 
-                    Please see the quotes below and let us know if you have any questions.
-                    {carriers}
-
-                    Please let us know how you'd like to proceed.";
-
-                var textPart= new TextPart("plain") { Text = text };
+                var textPart= new TextPart("html") { Text = result };
                 textPart.ContentType.Charset = "utf-8";
                 emailMessage.Body = textPart;
 
@@ -144,6 +140,9 @@ namespace MailBackgroundService.Services
                     await service.Users.Messages.Send(messageResponse, "me").ExecuteAsync();
                 }
                 //createShipmentAPI
+                ModifyMessageRequest mods = new ModifyMessageRequest();
+                mods.RemoveLabelIds = new List<string> { "UNREAD" };
+                service.Users.Messages.Modify(mods, "me", m.Id).Execute();
             }
             else
             {

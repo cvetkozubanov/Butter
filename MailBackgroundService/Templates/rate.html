@@ -1,0 +1,13 @@
+﻿<html>
+    <body>
+        Hi
+
+        Please see the quotes below and let us know if you have any questions.
+            <ul></ul>
+            {{ for rate in rates }}
+              <li>CARRIER{{ for.index + 1 }} - Curbside - $ (estimated transit time: {{ rate.value }} business days)</li>
+            {{ end }}
+            </ul>
+        Please let us know how you'd like to proceed.
+    </body>
+</html>
