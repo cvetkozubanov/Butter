@@ -32,8 +32,8 @@ namespace MailBackgroundService.Helper
                     index++;
                 }
             }
-            var key = Regex.Replace(shipperZip, @"\s+", string.Empty);
-            return Map.ContainsKey(key) ? Map[key] : "Shipping address not found!";
+            var keyWithoutSpaces = Regex.Replace(shipperZip, @"\s+", string.Empty);
+            return Map.ContainsKey(keyWithoutSpaces) ? Map[keyWithoutSpaces] : "Shipping address not found!";
         }
     }
 }
