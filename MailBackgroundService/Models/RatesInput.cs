@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using MailBackgroundService.Helper;
+using System.Text.RegularExpressions;
 
 namespace MailBackgroundService.Models
 {
@@ -15,7 +16,7 @@ namespace MailBackgroundService.Models
                 var address = mail.Split("to the address listed below:")[1].Split("\r\n")[4];
                 ConsigneeZip = address.Split(" ")[address.Split(" ").Length - 2];
                 ConsigneeAddress = address;
-                ShipperAddress = "TODO fix from map";
+                ShipperAddress = LocationMapper.GetAddress(shipperZip);
                 PickupDate = DateTime.Now.AddDays(1).ToString();
 
                 pattern = @"\d+[xX]\d+[xX]\d+";
