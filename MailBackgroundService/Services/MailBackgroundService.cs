@@ -61,7 +61,7 @@ namespace MailBackgroundService.Services
                         listRequest.Q = query;
 
                         var response = listRequest.Execute();
-                        _logger.LogInformation($"Execute {response.Messages.Count}");
+                        _logger.LogInformation($"Execute - no of messages: {response.Messages.Count}");
 
                         if (response.Messages != null)
                         {
@@ -78,8 +78,6 @@ namespace MailBackgroundService.Services
                                             string base64UrlData = part.Body.Data;
                                             string decodedBody = DecodeBase64Url(base64UrlData);
                                             await ParseAndRespondAsync(decodedBody, m, service);
-                                            //"Hello!\r\n\r\nWe have an order shipping from TSG - 08837 to the address listed below:\r\n\r\nMohammed Alshmayri\r\n24612 Dunning Street Dearborn Michigan 48124 US\r\n(313)213-1695\r\nmohamedalshmayri@gmail.com\r\n\r\nThe dimensions are as follows:\r\n\r\n1 Double Pallet-  16pcs - 104x44x41 1000lbs\r\n\r\nReference number: T1323302 / 31536023\r\n\r\nThese are ready to assemble. Notify Prior to Arrival, Lift Gate, Residential.\r\n\r\n2. \r\n\r\nHello!\r\n\r\nWe have an order shipping from Fabuwood -07105 to the address listed below:\r\n"), true);
-
                                             Console.WriteLine(decodedBody);
                                         }
                                     }
@@ -94,8 +92,11 @@ namespace MailBackgroundService.Services
                             }
                         }
 
+                    } else 
+                    {
+                        _logger.LogInformation($"ExecuteAsync credentials not found");
                     }
-                    await Task.Delay(5000, stoppingToken); // Wait 5 seconds
+                    await Task.Delay(60000, stoppingToken); // Wait 5 seconds
                 }
 
 
@@ -113,6 +114,8 @@ namespace MailBackgroundService.Services
             var rateInput = new RatesInput(decodedBody);
             if (rateInput.Valid)
             {
+                _logger.LogInformation($"ParseAndRespondAsync {JsonSerializer.Serialize(rateInput)}");
+
                 var rates = _ratesService.GetRates(rateInput, true);
                 var emailMessage = new MimeMessage();
                 emailMessage.From.Add(new MailboxAddress("Sender Name", readFromEmail));
@@ -139,13 +142,16 @@ namespace MailBackgroundService.Services
 
                 if (rates.Length > 0)
                 {
+                    _logger.LogInformation($"Reply to email");
                     await service.Users.Messages.Send(messageResponse, "me").ExecuteAsync();
                 }
                 rateInput.CustomerId = customerId;
+                _logger.LogInformation($"Quote rate");
                 _ratesService.QuoteRate(rateInput, true);
                 //createShipmentAPI
                 ModifyMessageRequest mods = new ModifyMessageRequest();
                 mods.RemoveLabelIds = new List<string> { "UNREAD" };
+                _logger.LogInformation($"Mark as read");
                 service.Users.Messages.Modify(mods, "me", m.Id).Execute();
             }
             else

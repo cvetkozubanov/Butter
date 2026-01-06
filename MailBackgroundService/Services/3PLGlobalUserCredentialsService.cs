@@ -43,6 +43,7 @@ namespace MailBackgroundService.Services
             var res = response.Content.ReadAsStringAsync().Result;
             Token token = JsonSerializer.Deserialize<Token>(res);
             AccessToken = token.access_token;
+            _logger.LogInformation("RTA Store-specific API token acquired");
             return token.access_token;
             
         }
