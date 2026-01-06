@@ -74,7 +74,7 @@ namespace MailBackgroundService.Services
                 _logger.LogError("RatesService QuoteRate", ex.Message);
                 if (firstTime)
                 {
-                    _3PLUserCredentialsService.GetToken();
+                    _3PLGlobalUserCredentialsService.GetToken();
                     QuoteRate(input, false);
                 }
             }
